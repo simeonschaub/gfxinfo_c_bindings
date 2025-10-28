@@ -76,7 +76,7 @@ pub extern "C" fn gfxinfo_get_device_id(handle: *const Box<dyn Gpu>) -> u32 {
     }
 
     let gpu = unsafe { &*handle };
-    gpu.device_id()
+    *gpu.device_id()
 }
 
 /// Free a GPU handle returned by gfxinfo_active_gpu
