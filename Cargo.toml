@@ -1,0 +1,16 @@
+[package]
+name = "gfxinfo_c_bindings"
+version = "0.1.0"
+edition = "2024"
+description = "C bindings for the gfxinfo library"
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+gfxinfo = { version = "0.1.2", features = ["amd", "nvidia", "intel"] }
+
+[profile.release]
+lto = true
+opt-level = 3
