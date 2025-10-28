@@ -68,21 +68,15 @@ pub extern "C" fn gfxinfo_get_family(handle: *const Box<dyn Gpu>) -> *mut c_char
 }
 
 /// Get the device ID of the GPU
-/// The returned string must be freed by calling gfxinfo_free_string
-/// Returns null if the handle is invalid
+/// Returns 0 if the handle is invalid
 #[unsafe(no_mangle)]
-pub extern "C" fn gfxinfo_get_device_id(handle: *const Box<dyn Gpu>) -> *mut c_char {
+pub extern "C" fn gfxinfo_get_device_id(handle: *const Box<dyn Gpu>) -> u32 {
     if handle.is_null() {
-        return std::ptr::null_mut();
+        return 0;
     }
 
     let gpu = unsafe { &*handle };
-    let device_id = gpu.device_id();
-
-    match CString::new(device_id.to_string()) {
-        Ok(s) => s.into_raw(),
-        Err(_) => std::ptr::null_mut(),
-    }
+    gpu.device_id()
 }
 
 /// Free a GPU handle returned by gfxinfo_active_gpu
